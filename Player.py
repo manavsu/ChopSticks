@@ -33,10 +33,11 @@ class Player:
         self.left = 1
         self.right = 1
 
-    def TakeTurn(self, opponent):
+    def TakeTurn(self, opponent, silent=False):
         attacker, target = self.GetMove(self, opponent)
         self.Attack(opponent, attacker, target)
-        print(str(self.name) + " Attacked " + opponent.name + "'s " + str(target) + " With " + str(attacker))
+        if not silent:
+            print(str(self.name) + " Attacked " + opponent.name + "'s " + str(target) + " With " + str(attacker))
 
     def GetMoveViaInput(self, opponent):
         assert self.left > 0 or self.right > 0, str(self.name) + " : You Are Already Dead"
