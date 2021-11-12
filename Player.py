@@ -20,12 +20,12 @@ class Player:
     num_fingers = 5
     failed_attack_error = "This Attack Will Achieve Nothing"
 
-    def __init__(self, name, use_ai):
+    def __init__(self, name, get_move_func=None):
         self.name = name
         self.left = 1
         self.right = 1
-        self.GetMove = self.GetMoveAI if use_ai else self.GetMoveViaInput
-        
+        self.GetMove = Player.GetMoveViaInput if get_move_func is None else get_move_func
+
     def IsAlive(self):
         return self.left > 0 or self.right > 0
 
@@ -34,7 +34,7 @@ class Player:
         self.right = 1
 
     def TakeTurn(self, opponent):
-        attacker, target = self.GetMoveViaInput(opponent)
+        attacker, target = self.GetMove(self, opponent)
         self.Attack(opponent, attacker, target)
         print(str(self.name) + " Attacked " + opponent.name + "'s " + str(target) + " With " + str(attacker))
 
@@ -43,9 +43,6 @@ class Player:
         attacker = self.GetSide(str(self.name) + " : Pick A Side To Attack With (L)eft or (R)ight? -> ")
         target = self.GetSide(str(self.name) + " : Target A Side (L)eft or (R)ight? -> ", opponent)
         return (attacker, target)
-
-    def GetMoveAI(self, opponent):
-        NotImplementedError("GetMoveAI")
 
     def GetSide(self, prompt, subject = None):
         if subject is None:

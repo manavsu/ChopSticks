@@ -1,18 +1,17 @@
 from Player import Player
 from GameLoop import GameLoop
 
-use_ai = False
-
 def CreatePlayer(number):
     name = input("What is Player " + str(number) + "'s name? ") 
-    return Player(name, use_ai)
+    return Player(name)
+
+def GetMove(player, opponent):
+    raise NotImplementedError
 
 def __main__():
     print("Welcome To Chopsticks")
-    print("The Winner Will Survive On The Next Round")
-    print("The Loser May Or May Not Be Have Their Brain Introduced To A Super Sonic Piece Of Metal")
     player_1 = CreatePlayer(1)
-    player_2 = CreatePlayer(2)
+    player_2 = Player("Computer")
     game_loop = GameLoop(player_1, player_2)
     play_again = True
     while play_again:
